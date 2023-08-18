@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "serve:webapp": "pnpm --filter webapp dev"
+    "serve:webapp": "pnpm --filter webapp dev",
+    "serve:website": "pnpm --filter website dev",
+    "serve:auth": "pnpm --filter auth dev"
   },
   "keywords": [],
   "author": "",
