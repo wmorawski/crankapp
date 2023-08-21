@@ -1,5 +1,9 @@
 {
   "compilerOptions": {
+    "baseUrl": ".",
+    "module": "es2020",
+    "moduleResolution": "node",
+    "outDir": "./dist",
     "strict": true,
     "strictNullChecks": true,
     "esModuleInterop": true,
@@ -8,7 +12,12 @@
     "noUnusedLocals": true,
     "skipLibCheck": true,
     "sourceMap": true,
-    "jsx": "react-jsx",
-    "moduleResolution": "node"
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true,
+    "allowJs": true,
+    "importHelpers": true,
+    "paths": {
+      "@crank/ui": ["libs/ui/src/index.ts"]
+    }
   }
 }

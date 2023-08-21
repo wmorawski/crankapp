@@ -1,0 +1,6 @@
+{
+  "extends": "./tsconfig.json",
+  "paths": {
+    "@crank/ui": ["dist/libs/crank-ui"]
+  }
+}
