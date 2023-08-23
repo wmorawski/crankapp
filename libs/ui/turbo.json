@@ -2,8 +2,7 @@
   "extends": ["//"],
   "pipeline": {
     "build": {
-      "dependsOn": ["^build:prod"],
-      "outputs": ["dist/**"]
+      "dependsOn": ["^build"]
     }
   }
 }
