@@ -1,6 +1,8 @@
 {
   "extends": ["//"],
   "pipeline": {
+    "build:prod": {
+    },
     "build": {
       "dependsOn": ["build:prod"],
       "outputs": ["dist/**"]
