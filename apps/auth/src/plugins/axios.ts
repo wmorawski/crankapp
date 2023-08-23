@@ -8,12 +8,8 @@ interface AxiosOptions {
 
 export default {
     install: (app: App, options: AxiosOptions) => {
-        const access = localStorage.getItem('access')
         app.config.globalProperties.$axios = axios.create({
             baseURL: options.baseUrl,
-            headers: {
-                ...(access ? {'Authorization': `Bearer ${access}`}: {})
-            }
         })
     }
 }

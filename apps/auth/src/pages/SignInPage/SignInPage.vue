@@ -14,36 +14,54 @@
     </div>
 
     <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-      <form class="space-y-6" action="#" method="POST">
+      <div class="space-y-6">
+      <FormKit id="signInForm" type="form" @submit="signInUser" submit-label="Sign in" validation-visibility="submit">
         <div>
-          <label for="email" class="block text-sm font-medium leading-6 text-white">Email address</label>
-          <div class="mt-2">
-            <input id="email" name="email" type="email" autocomplete="email" required="" class="block w-full rounded-md border-0 bg-white/5 py-1.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6" />
-          </div>
+            <FormKit type="text" id="username" name="username" label="Username" validation="required" />
         </div>
-
         <div>
-          <div class="flex items-center justify-between">
-            <label for="password" class="block text-sm font-medium leading-6 text-white">Password</label>
-            <div class="text-sm">
-              <a href="#" class="font-semibold text-indigo-400 hover:text-indigo-300">Forgot password?</a>
-            </div>
-          </div>
-          <div class="mt-2">
-            <input id="password" name="password" type="password" autocomplete="current-password" required="" class="block w-full rounded-md border-0 bg-white/5 py-1.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6" />
-          </div>
+          <FormKit type="password" id="password" name="password" label="Password" validation="required" />
         </div>
-
-        <div>
-          <button type="submit" class="flex w-full justify-center rounded-md bg-indigo-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500">Sign in</button>
-        </div>
-      </form>
-
+      </FormKit>
+      </div>
       <p class="mt-10 text-center text-sm text-gray-400">
         Not a member?
         {{ ' ' }}
         <router-link to="/signup" class="font-semibold leading-6 text-indigo-400 hover:text-indigo-300">Signup for free</router-link>
       </p>
     </div>
+    <div v-if="error" class="sm:mx-auto sm:w-full sm:max-w-sm mt-6">
+      <div class="rounded-md bg-red-50 p-4">
+        <div class="flex">
+          <div class="flex-shrink-0">
+            <XCircleIcon class="h-5 w-5 text-red-400" aria-hidden="true" />
+          </div>
+          <div class="ml-3">
+            <div class="text-sm text-red-700">
+              <span>{{error}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
+<script setup lang="ts">
+  import {signIn, createRedirectUrl} from "../../services/auth";
+  import {FormKitNode, getNode} from '@formkit/core'
+  import {AxiosError} from "axios";
+  import {ref} from "vue";
+  import { XCircleIcon } from '@heroicons/vue/20/solid'
+
+  const form: FormKitNode = getNode('signInUser')
+  const error = ref(null)
+
+  const signInUser = async (fields) => {
+    try {
+      const payload = (await signIn(fields)).data
+      window.location.href = createRedirectUrl(payload)
+    } catch(e: AxiosError) {
+      error.value = (e.response.data.detail);
+    }
+  }
+</script>

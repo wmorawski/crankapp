@@ -1,11 +1,13 @@
 import './style.css'
 import type { App } from 'vue';
-import Button from "./CrButton.vue";
+import CrButton from "./CrButton.vue";
+import CrAvatar from "./CrAvatar.vue";
 
 export default {
     install: (app: App) => {
-        app.component('Button', Button);
+        app.component('CrButton', CrButton);
+        app.component('CrAvatar', CrAvatar);
     }
 };
 
-export { Button };
+export { CrButton, CrAvatar };

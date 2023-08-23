@@ -4,12 +4,14 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --port=3003",
     "lint": "vue-tsc",
     "build": "vite build",
     "preview": "vite preview"
   },
   "dependencies": {
+    "@formkit/vue": "^0.18.4",
+    "@headlessui/vue": "^1.7.16",
     "@heroicons/vue": "^2.0.18",
     "axios": "^1.4.0",
     "crank-ui": "workspace:^",

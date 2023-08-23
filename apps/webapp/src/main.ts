@@ -9,6 +9,7 @@ import VueAxios from "vue-axios";
 import axios from "axios";
 import Axios from "./plugins/axios";
 
+
 const routes = [
     {
         path: "/",
@@ -31,15 +32,20 @@ app.provide('axios', app.config.globalProperties.$axios)
 router.beforeEach(async (to) => {
     const currentUser = useCurrentUserStore(pinia)
     if(currentUser.isLoggedIn === null) {
+        if('access' in to.query && 'refresh' in to.query) {
+            localStorage.setItem('access', <string>to.query.access)
+            localStorage.setItem('refresh', <string>to.query.refresh)
+            app.config.globalProperties.$axios.defaults.headers['Authorization'] = `Bearer ${to.query.access}`;
+        }
         try {
-        const apiUser = await currentUser.fetchCurrentUser
-
+            const apiUser = (await currentUser.fetchCurrentUser()).data
+            currentUser.setIsLoggedIn(true);
+            currentUser.setCurrentUser(apiUser);
+            router.push('/')
         } catch (e) {
-            // if(!to.meta.isPublic) window.location = import.meta.env.VITE_AUTH_URL
+            if(!to.meta.isPublic) window.location = import.meta.env.VITE_AUTH_URL
         }
     }
-
-    console.log({to}, currentUser.isLoggedIn)
 })
 
 app.mount('#app')
