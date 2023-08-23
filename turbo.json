@@ -5,6 +5,10 @@
       "dependsOn": ["^build"],
       "outputs": ["dist/**"]
     },
+    "auth#build": {
+      "dependsOn": ["^build:prod"],
+      "outputs": ["dist/**"]
+    },
     "deploy": {
       "dependsOn": ["build", "test", "lint"]
     },
