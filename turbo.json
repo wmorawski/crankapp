@@ -1,6 +1,11 @@
 {
   "$schema": "https://turbo.build/schema.json",
   "pipeline": {
+    "auth#build": {
+      "dependsOn": ["build"],
+      "outputs": ["dist/**"]
+    },
+    "build:prod": {},
     "build": {
       "dependsOn": ["^build"],
       "outputs": ["dist/**"]
